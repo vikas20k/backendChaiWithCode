@@ -3,13 +3,24 @@ import mongoose from "mongoose";// this is use with fist aproch
 import { DB_NAME } from "./constant.js";// this is use with fist aproch
 import connectDB from "./db/indexDB.js";
 import dotenv from "dotenv"
+import { app } from "./app.js"
 
 dotenv.config({
     path: './env'
 })
 
 connectDB()
-
+    .then(() => {
+        app.listen(process.env.PORT || 8000, () => {
+            console.log(`Server error index.js 15 ${process.env.PORT}`)
+            app.on("error", (error) => {
+                console.log("ERROR index.js 17", error)
+            })
+        })
+    })
+    .catch((error) => {
+        console.log(" index.js MOGO db connection failed !!", error)
+    })
 
 
 
